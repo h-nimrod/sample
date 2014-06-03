@@ -49,7 +49,7 @@ sub main {
 	dump_filelist $wh;
 	close $wh;
 
-	print `$ffmpeg -f concat  -i $fname -s $size -b:v $bitrate merge2.wmv`;
+	print `$ffmpeg -f concat  -i $fname -s $size -b:v $bitrate merge.wmv`;
 
 	unlink $fname;
 }
