@@ -23,7 +23,7 @@ my @video_files;
 ##############################
 sub search {
     my $file = $File::Find::name;
-    if($file =~ /${file_pattern}/i){
+    if ($file =~ /${file_pattern}/i) {
 		$file =~ s/^\.//;
 		
 		$file = $basedir . $file;
@@ -35,7 +35,7 @@ sub search {
 sub dump_filelist {
 	my $wh = shift || return;
 
-	foreach (sort @video_files){
+	foreach (sort @video_files) {
 		my $str = "file '" . $_ . "'\n";
 		print $wh $str;
 	}
@@ -48,8 +48,10 @@ sub main {
 	my ($wh, $fname) = tempfile;
 	dump_filelist $wh;
 	close $wh;
-
-	print `$ffmpeg -f concat  -i $fname -s $size -b:v $bitrate merge.wmv`;
+	
+	if (!-f $ffmpeg) {
+		print `$ffmpeg -f concat  -i $fname -s $size -b:v $bitrate merge.wmv`;
+	}
 
 	unlink $fname;
 }
